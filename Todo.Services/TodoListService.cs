@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Todo.Domain;
-using Todo.Domain.Exceptions;
+using Todo.Domain.Exceptions.TodoList;
 using Todo.Repositories;
 using Todo.Services.Factories;
 

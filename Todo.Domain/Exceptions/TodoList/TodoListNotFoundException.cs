@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Todo.Domain.Exceptions
+namespace Todo.Domain.Exceptions.TodoList
 {
     public class TodoListNotFoundException: Exception
     {

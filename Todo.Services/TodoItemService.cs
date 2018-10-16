@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Todo.Domain;
-using Todo.Domain.Exceptions;
+using Todo.Domain.Exceptions.TodoItem;
 using Todo.Repositories;
 using Todo.Services.Factories;
+using TodoCore.Data.Entities;
 
 namespace Todo.Services
 {
@@ -22,14 +23,29 @@ namespace Todo.Services
         public TodoItem Add(TodoItem item)
         {
             var itemEnity = _todoItemFactory.Create(item);
-            var entity = _todoItemRepository.Add(itemEnity);
+
+            TodoItemEntity entity;
+            try
+            {
+                entity = _todoItemRepository.Add(itemEnity);
+            }catch(Exception ex)
+            {
+                throw new TodoItemAddException(ex.Message);
+            }
 
             return _todoItemFactory.Create(entity);
         }
 
         public void Delete(int todoItemId)
         {
-            _todoItemRepository.Delete(todoItemId);
+            try
+            {
+                _todoItemRepository.Delete(todoItemId);
+            }catch(Exception ex)
+            {
+                throw new TodoItemDeleteException(ex.Message);
+            }
+            
         }
 
         public IEnumerable<TodoItem> Get()
@@ -61,9 +77,18 @@ namespace Todo.Services
         public TodoItem Update(TodoItem item)
         {
             var entity = _todoItemFactory.Create(item);
-            var updateEntity = _todoItemRepository.Update(entity);
 
-            return _todoItemFactory.Create(updateEntity);
+            TodoItemEntity updatedEntity;
+            try
+            {
+                updatedEntity = _todoItemRepository.Update(entity);
+            }catch(Exception ex)
+            {
+                throw new TodoItemUpdateException(ex.Message);
+            }
+            
+
+            return _todoItemFactory.Create(updatedEntity);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Todo.Domain.Exceptions
+namespace Todo.Domain.Exceptions.TodoItem
 {
     public class TodoItemNotFoundException : Exception
     {
