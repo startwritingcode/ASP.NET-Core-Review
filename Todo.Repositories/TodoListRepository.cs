@@ -10,7 +10,7 @@ namespace Todo.Repositories
 
     public class TodoListRepository : Repository<TodoListEntity>, ITodoListRepository
     {
-        protected TodoListRepository(TodoListContext context) : base(context)
+        public TodoListRepository(TodoListContext context) : base(context)
         {
         }
     }

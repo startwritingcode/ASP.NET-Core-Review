@@ -10,6 +10,6 @@ namespace Todo.Domain
         public string Description { get; set; }
         public IEnumerable<TodoItem> Items { get; set; }
 
-        public bool IsComplete => Items.All(i => i.IsComplete);
+        public bool IsComplete => Items.Any() && Items.All(i => i.IsComplete);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Todo.Domain;
 using TodoCore.Data.Entities;
 
@@ -8,37 +9,51 @@ namespace Todo.Services.Factories
     {
         public TodoList Create(TodoListEntity todoListEntity)
         {
-            return new TodoList
+            var list = new TodoList
             {
                 Id = todoListEntity.Id,
                 Name = todoListEntity.Name,
                 Description = todoListEntity.Description,
-                Items = todoListEntity.Items.Select(i => new TodoItem
+                Items = new List<TodoItem>()
+            };
+
+            if(todoListEntity.Items != null)
+            {
+                list.Items = todoListEntity.Items.Select(i => new TodoItem
                 {
                     Id = i.Id,
                     Name = i.Name,
                     Description = i.Description,
                     IsComplete = i.IsComplete
-                })
-            };
+                });
+            }
+
+            return list;
         }
 
         public TodoListEntity Create(TodoList list)
         {
-            return new TodoListEntity
+            var entity =  new TodoListEntity
             {
                 Id = list.Id,
                 Name = list.Name,
                 Description = list.Description,
-                Items = list.Items.Select(i => new TodoItemEntity
+                Items = new List<TodoItemEntity>()
+            };
+
+            if(list.Items != null)
+            {
+                entity.Items = list.Items.Select(i => new TodoItemEntity
                 {
                     Id = i.Id,
                     Name = i.Name,
                     Description = i.Description,
                     IsComplete = i.IsComplete,
                     TodoListId = list.Id
-                }).ToList()
-            };
+                }).ToList();
+            }
+
+            return entity;
         }
     }
 }

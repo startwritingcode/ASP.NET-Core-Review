@@ -9,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Todo.Repositories;
 using Todo.Services;
+using Todo.Services.Factories;
 using TodoCore.Data;
+using TodoCore.Factories;
 
 namespace TodoCore
 {
@@ -19,16 +21,22 @@ namespace TodoCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ITodoListRepository, TodoListRepository>();
-            services.AddTransient<ITodoItemRepository, TodoItemRepository>();
-            services.AddTransient<ITodoListService, TodoListService>();
-            services.AddTransient<ITodoListService, TodoListService>();
-
-            services.AddMvc();
+            services.AddScoped<ITodoListRepository, TodoListRepository>();
+            services.AddScoped<ITodoItemRepository, TodoItemRepository>();
+            services.AddScoped<ITodoListService, TodoListService>();
+            services.AddScoped<ITodoListService, TodoListService>();
+            services.AddScoped<ITodoListFactory, TodoListFactory>();
+            services.AddScoped<ITodoItemFactory, TodoItemFactory>();
+            services.AddScoped<ITodoListDtoFactory, TodoListDtoFactory>();
+            services.AddScoped<ITodoItemDtoFactory, TodoItemDtoFactory>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=TodoCore;Trusted_Connection=True;";
             services.AddDbContext<TodoListContext>
                 (options => options.UseSqlServer(connection, b => b.MigrationsAssembly("TodoCore")));
+
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,10 +47,15 @@ namespace TodoCore
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseMvc();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World!");
+            //});
         }
     }
 }
