@@ -33,3 +33,30 @@ As you can see, it will contain all the normal CRUD (Create, Read, Update, Delet
 Because I very strongly believe in testing the code that I write, I will be making sure to add unit tests using [NUnit](https://nunit.org/). I'm not looking for high levels of unit test code coverage, but I will be making sure that the Service layer will have plenty of test coverage to make sure that the application logic functions as expected.
 
 To help enable unit testing in this application, I will be using the [Moq](https://github.com/moq/moq4) mocking framework.
+
+# Application Structure
+
+As I am first going through the process of creating this application, I am going to start with a structure that I am comfortable with and see if it feels like it should evolve over time. Here is what the structure currently looks like:
+
+* Web App (TodoCore)
+* Service Layer (TodoCore.Services)
+* Data Access Layer (TodoCore.Repositories)
+* Data Layer (TodoCore.Data)
+* Domain (TodoCore.Domain)
+
+## References
+
+When developing an application like this with the structure above, it is important to make sure that the project references are clean and clearly defined. Here is a list for the interproject references:
+
+* Web App (TodoCore)
+  * Service Layer (TodoCore.Services)
+  * Domain (TodoCore.Domain)
+* Service Layer (TodoCore.Services)
+  * Data Access Layer (TodoCore.Repositories)
+  * Data Layer (TodoCore.Data)
+* Data Access Layer (TodoCore.Repositories)
+  * Data Layer (TodoCore.Data)
+* Data Layer (TodoCore.Data)
+  * No references
+* Domain (Todo.Domain)
+  * No references
