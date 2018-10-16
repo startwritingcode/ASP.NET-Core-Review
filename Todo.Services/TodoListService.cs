@@ -5,6 +5,7 @@ using Todo.Domain;
 using Todo.Domain.Exceptions.TodoList;
 using Todo.Repositories;
 using Todo.Services.Factories;
+using TodoCore.Data.Entities;
 
 namespace Todo.Services
 {
@@ -22,14 +23,29 @@ namespace Todo.Services
         public TodoList Add(TodoList list)
         {
             var listEnity = _todoListFactory.Create(list);
-            var entity = _todoListRepository.Add(listEnity);
+
+            TodoListEntity entity;
+            try
+            {
+                entity = _todoListRepository.Add(listEnity);
+            }catch(Exception ex)
+            {
+                throw new TodoListAddException(ex.Message);
+            }
 
             return _todoListFactory.Create(entity);
         }
 
         public void Delete(int todoListId)
         {
-            _todoListRepository.Delete(todoListId);
+            try
+            {
+                _todoListRepository.Delete(todoListId);
+            }catch(Exception ex)
+            {
+                throw new TodoListDeleteException(ex.Message);
+            }
+            
         }
 
         public IEnumerable<TodoList> Get()
@@ -61,9 +77,17 @@ namespace Todo.Services
         public TodoList Update(TodoList list)
         {
             var entity = _todoListFactory.Create(list);
-            var updateEntity = _todoListRepository.Update(entity);
 
-            return _todoListFactory.Create(updateEntity);
+            TodoListEntity updatedEntity;
+            try
+            {
+                updatedEntity = _todoListRepository.Update(entity);
+            }catch(Exception ex)
+            {
+                throw new TodoListUpdateException(ex.Message);
+            }
+
+            return _todoListFactory.Create(updatedEntity);
         }
     }
 }
