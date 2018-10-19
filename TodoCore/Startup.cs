@@ -24,7 +24,7 @@ namespace TodoCore
             services.AddScoped<ITodoListRepository, TodoListRepository>();
             services.AddScoped<ITodoItemRepository, TodoItemRepository>();
             services.AddScoped<ITodoListService, TodoListService>();
-            services.AddScoped<ITodoListService, TodoListService>();
+            services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<ITodoListFactory, TodoListFactory>();
             services.AddScoped<ITodoItemFactory, TodoItemFactory>();
             services.AddScoped<ITodoListDtoFactory, TodoListDtoFactory>();
