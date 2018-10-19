@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Todo.Domain.Exceptions.TodoItem;
-using Todo.Domain.Exceptions.TodoList;
 using Todo.Services;
 using TodoCore.Dtos;
 using TodoCore.Factories;
