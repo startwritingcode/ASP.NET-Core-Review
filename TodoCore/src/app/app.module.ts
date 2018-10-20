@@ -9,6 +9,7 @@ import { TodoItemsComponent } from './components/todo-items/todo-items.component
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { TodoItemCreateComponent } from './components/todo-item-create/todo-item-create.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
